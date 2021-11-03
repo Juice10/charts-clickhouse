@@ -8,11 +8,11 @@ metadata:
     release: "{{ .Release.Name }}"
     heritage: "{{ .Release.Service }}"
   annotations:
-    # This is what defines this resource as a hook. Without this line, the
-    # job is considered part of the release.
-    "helm.sh/hook": "post-install,post-upgrade"
-    "helm.sh/hook-delete-policy": "hook-succeeded"
-    "helm.sh/hook-weight": "0"
+    # Kubernetes Jobs are designed to run and then terminate, but they stick around in the namespace after completion.
+    # Because job objects are immutable, this can cause conflicts and errors when attempting to update the job later.
+    # With this custom annotation, we specify a delete hook policy for Helm indicating to delete the job after it
+    # completes succcesfully.
+    "helm.sh/hook-delete-policy": "hook-succeeded",
 spec:
   template:
     metadata:
