@@ -680,3 +680,6 @@ statsd:
     prometheus.io/scrape: "true"
     prometheus.io/path: /metrics
     prometheus.io/port: "9102"
+
+# Misc
+installCustomStorageClass: false
